@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { firestore } from "./firebase";
+import { firestore } from "../firebase";
 import { collection, getDocs } from "firebase/firestore/lite";
 
 export default function useCafesAPI() {
@@ -10,7 +10,7 @@ export default function useCafesAPI() {
   useEffect(() => {
     const getCities = async (firestore) => {
       try {
-        const cafes = await collection(firestore, "cafes");
+        const cafes = collection(firestore, "cafes");
         const cafesDocs = await getDocs(cafes);
         setCafeList(cafesDocs.docs.map((doc) => doc.data()));
         setLoading(false);
@@ -18,7 +18,7 @@ export default function useCafesAPI() {
         setError("Failed to fetch cafes");
       }
     };
-    
+
     getCities(firestore);
   }, []);
 
